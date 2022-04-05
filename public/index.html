@@ -11,73 +11,26 @@
 </head>
 
 <body class="container">
-    <h1 class="mt-5">MiniChat</h1>
+    <h1 class="mt-5">Acceso denegado</h1>
     <hr />
-
-
-    <form id="idForm" action="">
-        <div class="row">
-            <div class="col-8">
-                <input type="text" id="txtMessage" class="form-control" placeholder="Message">
-            </div>
-
-            <div class="col-4">
-                <button type="submit" class="btn btn-primary">
-                    Enviar
-                </button>
-            </div>
-        </div>
-
-        <div class="row ">
-            <div class="col">
-                <ul id="meMessages" class="mt-3">
-                </ul>
-            </div>
-        </div>
-    </form>
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"
         integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script>
+        //Conexión con el socket server
+        const socket = io('http://localhost:8081');
 
-        const socket = io('https://react-socket-server-gmontiel.herokuapp.com/');
-
-        const formulario = document.querySelector('#idForm');
-        const mensajes = document.querySelector('#meMessages');
-        const txtMessage = document.querySelector('#txtMessage');
-
-        formulario.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            socket.emit('mensaje-to-server', {
-                text: txtMessage.value
-            })
-
-        });
+        //Para emitir
+        // socket.emit('mensaje-to-server', {data});
 
         socket.on('mensaje-from-server', (data) => {
-            mensajes.innerHTML += `<li>${data.text}</li>`;
+
         })
 
-
-        // socket.on('mensaje-bienvenida', (data) => {
-        //     console.log(data);
-        // });
-
-        // setTimeout(() => {
-        //     console.log('Mensaje enviado al server');
-
-            // socket.emit('mensaje-cliente', {
-            //     msg: 'Cliente',
-            //     name: 'Montiel German'
-            // })
-
-        // }, 2000);
-
+        socket.on('connect', (data) => {
+            console.log(data);
+        });
 
     </script>
 </body>
